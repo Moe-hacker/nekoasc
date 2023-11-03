@@ -28,8 +28,14 @@
  *
  */
 #include "nekoasc.h"
-int main()
+int main(int argc, char **argv)
 {
+  if(argc > 1){
+    if (strcmp(argv[1], "-v")==0){
+      show_version_info();
+      exit(0);
+    }
+  }
   if (!is_pipe())
   {
     error("This program only gets input with a pipe!");

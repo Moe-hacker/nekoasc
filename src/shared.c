@@ -28,20 +28,6 @@
  *
  */
 #include "nekoasc.h"
-bool is_pipe()
-{
-  /*
-   * Simply check the file type of /proc/self/fd/0
-   * and return true if it is a pipe.
-   */
-  struct stat statbuf;
-  stat("/proc/self/fd/0", &statbuf);
-  if (S_ISFIFO(statbuf.st_mode))
-  {
-    return true;
-  }
-  return false;
-}
 void error(char *msg)
 {
   /*
@@ -59,22 +45,24 @@ void error(char *msg)
   fprintf(stderr, "\033[4;1;38;2;254;228;208m%s\033[0m\n", "https://github.com/Moe-hacker/mescii/issues");
   exit(1);
 }
-void get_input(char *buf, int len)
+void show_version_info()
 {
   /*
-   * Simply use getchar() to get input
-   * and write it to *buf.
-   * We do not use read() because it causes bugs.
+   * Just show version info and license.
+   * Version info is defined in macro NEKOASC_VERSION.
+   * NEKOASC_COMMIT_ID is defined in Makefile.
    */
-  char input = 0;
-  for (int i = 0; i < len; i++)
-  {
-    input = (char)getchar();
-    if (input == EOF)
-    {
-      buf[i] = '\000';
-      break;
-    }
-    buf[i] = input;
-  }
+  printf("\n");
+  printf("\033[1;38;2;254;228;208m");
+  printf("  ●   ● ●●●●● ●   ●  ●●●    ●   ●●●   ●●●  \n");
+  printf("  ●●  ● ●     ●  ●  ●   ●  ● ● ●     ●   ● \n");
+  printf("  ● ● ● ●●●●  ●●●   ●   ● ●   ● ●●●  ●     \n");
+  printf("  ●  ●● ●     ●  ●  ●   ● ●●●●●    ● ●   ● \n");
+  printf("  ●   ● ●●●●● ●   ●  ●●●  ●   ● ●●●   ●●●  \n");
+  printf("       Licensed under the MIT License\n");
+  printf("          <https://mit-license.org>\n");
+  printf("        Copyright (C) 2023 Moe-hacker\n");
+  printf("%s%s%s", "           NekoAsc version : ", NEKOASC_VERSION, "\n");
+  printf("%s%s%s\033[0m", "           Commit id       : ", NEKOASC_COMMIT_ID, "\n");
+  printf("\n");
 }

@@ -27,24 +27,37 @@
  *
  *
  */
-#define _GNU_SOURCE
-#include <linux/limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-// VSCode doesn't think bool is standard C keyword,
-// make it happy.
-#include <stdbool.h>
-#define NEKOASC_VERSION "0.0"
-enum
+#include "nekoasc.h"
+bool is_pipe()
 {
-  BUF_SIZE = (1024 * 1024)
-};
-bool is_pipe();
-void error(char *msg);
-void typewriter(char *buf, unsigned int rate);
-void get_input(char *buf, int len);
-void show_version_info();
+  /*
+   * Simply check the file type of /proc/self/fd/0
+   * and return true if it is a pipe.
+   */
+  struct stat statbuf;
+  stat("/proc/self/fd/0", &statbuf);
+  if (S_ISFIFO(statbuf.st_mode))
+  {
+    return true;
+  }
+  return false;
+}
+void get_input(char *buf, int len)
+{
+  /*
+   * Simply use getchar() to get input
+   * and write it to *buf.
+   * We do not use read() because it causes bugs.
+   */
+  char input = 0;
+  for (int i = 0; i < len; i++)
+  {
+    input = (char)getchar();
+    if (input == EOF)
+    {
+      buf[i] = '\000';
+      break;
+    }
+    buf[i] = input;
+  }
+}

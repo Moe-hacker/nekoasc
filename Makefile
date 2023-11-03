@@ -1,9 +1,10 @@
-SRC = src/main.c src/shared.c src/typewriter.c
+SRC = src/main.c src/shared.c src/typewriter.c src/input.c
 BIN_TARGET = nekoasc
 CHECKER = clang-tidy --use-color
 CHECK_ARG = --checks=*,-clang-analyzer-security.insecureAPI.strcpy,-altera-unroll-loops,-cert-err33-c,-concurrency-mt-unsafe,-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling,-readability-function-cognitive-complexity,-cppcoreguidelines-avoid-magic-numbers,-readability-magic-numbers,-misc-no-recursion,-bugprone-easily-swappable-parameters,-readability-identifier-length,-cert-err34-c,-bugprone-assignment-in-if-condition,-altera*
+COMMIT_ID = -DNEKOASC_COMMIT_ID=\"`git log --oneline|head -1|cut -d " " -f 1`\"
 all:
-	clang -ggdb -O0 -z norelro -z execstack -no-pie -D_FORTIFY_SOURCE=3 -Og -Wall -Wextra -pedantic -Wconversion -std=c2x -Wno-newline-eof -fno-stack-protector -fno-omit-frame-pointer $(SRC) -o $(BIN_TARGET)
+	clang -ggdb -O0 -z norelro -z execstack -no-pie -D_FORTIFY_SOURCE=3 -Og -Wall -Wextra -pedantic -Wconversion -std=c2x -Wno-newline-eof -fno-stack-protector -fno-omit-frame-pointer $(COMMIT_ID) $(SRC) -o $(BIN_TARGET)
 format:
 	clang-format -i $(SRC) src/nekoasc.h
 check :
