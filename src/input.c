@@ -49,15 +49,15 @@ void get_input(char *buf, int len)
    * and write it to *buf.
    * We do not use read() because it causes bugs.
    */
-  char input = 0;
+  int input = 0;
   for (int i = 0; i < len; i++)
   {
-    input = (char)getchar();
+    input = getchar();
     if (input == EOF)
     {
       buf[i] = '\000';
       break;
     }
-    buf[i] = input;
+    buf[i] = (char)input;
   }
 }
