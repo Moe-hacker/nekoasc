@@ -16,5 +16,5 @@ make
 ## Usage:
 I only wrote typewriter effect for it, to use:
 ```
-[some commands] | ./nekoasc
+[some commands] | ./nekoasc t -s 50
 ```
