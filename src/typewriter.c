@@ -28,7 +28,7 @@
  *
  */
 #include "nekoasc.h"
-void typewriter(char *buf, unsigned int rate)
+void typewriter(char *buf, unsigned int interval)
 {
   /*
    * A simple animation that prints *buf
@@ -46,7 +46,7 @@ void typewriter(char *buf, unsigned int rate)
     fflush(stdout);
     if (!control_char)
     {
-      usleep(rate);
+      usleep(interval);
     }
     if (buf[i] == '\033')
     {

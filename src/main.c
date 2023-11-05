@@ -28,19 +28,55 @@
  *
  */
 #include "nekoasc.h"
-int main(int argc, char **argv)
+struct ARGS
 {
-  if(argc > 1){
-    if (strcmp(argv[1], "-v")==0){
-      show_version_info();
-      exit(0);
+  unsigned int interval;
+  int mode;
+};
+static void parse_args(int argc, char **argv, struct ARGS *args)
+{
+  if (strcmp(argv[1], "version") == 0 || strcmp(argv[1], "v") == 0)
+  {
+    show_version_info();
+    exit(0);
+  }
+  if (strcmp(argv[1], "typewriter") == 0 || strcmp(argv[1], "t") == 0)
+  {
+    args->mode = 1;
+  }
+  for (int i = 2; i < argc; i++)
+  {
+    if (strcmp(argv[1], "--speed") == 0 || strcmp(argv[i], "-s") == 0)
+    {
+      i++;
+      args->interval = 1000000 / (unsigned int)atoi(argv[i]);
     }
   }
+}
+int main(int argc, char **argv)
+{
+  if (argc < 2)
+  {
+    error("Missing arguments");
+  }
+  struct ARGS args = {
+    .interval = 100000,
+    .mode = 1,
+  };
+  parse_args(argc, argv, &args);
   if (!is_pipe())
   {
     error("This program only gets input with a pipe!");
   }
   char buf[BUF_SIZE] = {'\000'};
   get_input(buf, BUF_SIZE);
-  typewriter(buf, 40000);
+  switch (args.mode)
+  {
+  case 1:
+    typewriter(buf, args.interval);
+    break;
+  default:
+    break;
+  }
+  return 0;
 }

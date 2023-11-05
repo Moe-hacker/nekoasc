@@ -45,6 +45,6 @@ enum
 };
 bool is_pipe();
 void error(char *msg);
-void typewriter(char *buf, unsigned int rate);
+void typewriter(char *buf, unsigned int interval);
 void get_input(char *buf, int len);
 void show_version_info();
