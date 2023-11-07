@@ -44,12 +44,20 @@ static void parse_args(int argc, char **argv, struct ARGS *args)
   {
     args->mode = 1;
   }
+  else
+  {
+    error("Unknown command !");
+  }
   for (int i = 2; i < argc; i++)
   {
     if (strcmp(argv[1], "--speed") == 0 || strcmp(argv[i], "-s") == 0)
     {
       i++;
       args->interval = 1000000 / (unsigned int)atoi(argv[i]);
+    }
+    else
+    {
+      error("Unknown argument !");
     }
   }
 }
