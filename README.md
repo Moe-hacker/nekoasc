@@ -17,5 +17,5 @@ make
 I only wrote typewriter and blink effect for it, to use:
 ```
 [some commands] | ./nekoasc t -s 30
-[some commands] | ./nekoasc b -r 255 -g 0 -b 0 -k 5 -d 100
+[some commands] | ./nekoasc b -r 255 -g 0 -b 0 -k 5 -d 100 -s 200
 ```

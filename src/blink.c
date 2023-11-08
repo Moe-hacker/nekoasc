@@ -28,7 +28,7 @@
  *
  */
 #include "nekoasc.h"
-void blink(char *buf, int keep_time, int r, int g, int b, int depth)
+void blink(char *buf, int keep_time, int r, int g, int b, int depth, unsigned int interval)
 {
   printf("\033[?25l");
   time_t time_old = 0;
@@ -46,7 +46,7 @@ void blink(char *buf, int keep_time, int r, int g, int b, int depth)
       printf("\033[38;2;%d;%d;%dm%s\n", r_tmp, g_tmp, b_tmp, buf);
       printf("\n");
       fflush(stdout);
-      usleep(3000);
+      usleep(interval);
     }
     for (int i = 0; i < depth; i++)
     {
@@ -57,7 +57,7 @@ void blink(char *buf, int keep_time, int r, int g, int b, int depth)
       printf("\033[38;2;%d;%d;%dm%s\n", r_tmp, g_tmp, b_tmp, buf);
       printf("\n");
       fflush(stdout);
-      usleep(3000);
+      usleep(interval);
     }
     time(&time_now);
     if (time_now - time_old >= keep_time)

@@ -127,7 +127,7 @@ int main(int argc, char **argv)
     typewriter(buf, args.interval);
     break;
   case 2:
-    blink(buf, args.keeptime, args.r, args.g, args.b, args.depth);
+    blink(buf, args.keeptime, args.r, args.g, args.b, args.depth, args.interval);
     break;
   default:
     break;
