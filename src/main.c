@@ -32,6 +32,11 @@ struct ARGS
 {
   unsigned int interval;
   int mode;
+  int r;
+  int g;
+  int b;
+  int depth;
+  int keeptime;
 };
 static void parse_args(int argc, char **argv, struct ARGS *args)
 {
@@ -44,6 +49,10 @@ static void parse_args(int argc, char **argv, struct ARGS *args)
   {
     args->mode = 1;
   }
+  else if (strcmp(argv[1], "blink") == 0 || strcmp(argv[1], "b") == 0)
+  {
+    args->mode = 2;
+  }
   else
   {
     error("Unknown command !");
@@ -55,10 +64,39 @@ static void parse_args(int argc, char **argv, struct ARGS *args)
       i++;
       args->interval = 1000000 / (unsigned int)atoi(argv[i]);
     }
+    else if (strcmp(argv[1], "--red") == 0 || strcmp(argv[i], "-r") == 0)
+    {
+      i++;
+      args->r = atoi(argv[i]);
+    }
+    else if (strcmp(argv[1], "--green") == 0 || strcmp(argv[i], "-g") == 0)
+    {
+      i++;
+      args->g = atoi(argv[i]);
+    }
+    else if (strcmp(argv[1], "--blue") == 0 || strcmp(argv[i], "-b") == 0)
+    {
+      i++;
+      args->b = atoi(argv[i]);
+    }
+    else if (strcmp(argv[1], "--keep") == 0 || strcmp(argv[i], "-k") == 0)
+    {
+      i++;
+      args->keeptime = atoi(argv[i]);
+    }
+    else if (strcmp(argv[1], "--depth") == 0 || strcmp(argv[i], "-d") == 0)
+    {
+      i++;
+      args->depth = atoi(argv[i]);
+    }
     else
     {
       error("Unknown argument !");
     }
+  }
+  if (args->r > 255 || args->g > 255 || args->b > 255)
+  {
+    error("Max RGB color value is 255 !");
   }
 }
 int main(int argc, char **argv)
@@ -70,6 +108,11 @@ int main(int argc, char **argv)
   struct ARGS args = {
     .interval = 100000,
     .mode = 1,
+    .r = 255,
+    .g = 0,
+    .b = 0,
+    .depth = 100,
+    .keeptime = 3,
   };
   parse_args(argc, argv, &args);
   if (!is_pipe())
@@ -82,6 +125,9 @@ int main(int argc, char **argv)
   {
   case 1:
     typewriter(buf, args.interval);
+    break;
+  case 2:
+    blink(buf, args.keeptime, args.r, args.g, args.b, args.depth);
     break;
   default:
     break;

@@ -27,28 +27,43 @@
  *
  *
  */
-#define _GNU_SOURCE
-#include <linux/limits.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <termios.h>
-#include <time.h>
-#include <unistd.h>
-// VSCode doesn't think bool is standard C keyword,
-// make it happy.
-#include <stdbool.h>
-#define NEKOASC_VERSION "0.0"
-enum
+#include "nekoasc.h"
+void blink(char *buf, int keep_time, int r, int g, int b, int depth)
 {
-  BUF_SIZE = (1024 * 1024)
-};
-bool is_pipe();
-void error(char *msg);
-void typewriter(char *buf, unsigned int interval);
-void get_input(char *buf, int len);
-void show_version_info();
-void blink(char *buf, int keep_time, int r, int g, int b, int depth);
+  printf("\033[?25l");
+  time_t time_old = 0;
+  time(&time_old);
+  time_t time_now = 0;
+  int r_tmp = 0, g_tmp = 0, b_tmp = 0;
+  while (true)
+  {
+    for (int i = 0; i < depth; i++)
+    {
+      r_tmp = r - i > 0 ? r - i : 0;
+      g_tmp = g - i > 0 ? g - i : 0;
+      b_tmp = b - i > 0 ? b - i : 0;
+      printf("\033c");
+      printf("\033[38;2;%d;%d;%dm%s\n", r_tmp, g_tmp, b_tmp, buf);
+      printf("\n");
+      fflush(stdout);
+      usleep(3000);
+    }
+    for (int i = 0; i < depth; i++)
+    {
+      r_tmp = r - depth + i > 0 ? r - depth + i : 0;
+      g_tmp = g - depth + i > 0 ? g - depth + i : 0;
+      b_tmp = b - depth + i > 0 ? b - depth + i : 0;
+      printf("\033c");
+      printf("\033[38;2;%d;%d;%dm%s\n", r_tmp, g_tmp, b_tmp, buf);
+      printf("\n");
+      fflush(stdout);
+      usleep(3000);
+    }
+    time(&time_now);
+    if (time_now - time_old >= keep_time)
+    {
+      break;
+    }
+  }
+  printf("\033[?25h");
+}
