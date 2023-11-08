@@ -59,32 +59,32 @@ static void parse_args(int argc, char **argv, struct ARGS *args)
   }
   for (int i = 2; i < argc; i++)
   {
-    if (strcmp(argv[1], "--speed") == 0 || strcmp(argv[i], "-s") == 0)
+    if (strcmp(argv[i], "--speed") == 0 || strcmp(argv[i], "-s") == 0)
     {
       i++;
       args->interval = 1000000 / (unsigned int)atoi(argv[i]);
     }
-    else if (strcmp(argv[1], "--red") == 0 || strcmp(argv[i], "-r") == 0)
+    else if (strcmp(argv[i], "--red") == 0 || strcmp(argv[i], "-r") == 0)
     {
       i++;
       args->r = atoi(argv[i]);
     }
-    else if (strcmp(argv[1], "--green") == 0 || strcmp(argv[i], "-g") == 0)
+    else if (strcmp(argv[i], "--green") == 0 || strcmp(argv[i], "-g") == 0)
     {
       i++;
       args->g = atoi(argv[i]);
     }
-    else if (strcmp(argv[1], "--blue") == 0 || strcmp(argv[i], "-b") == 0)
+    else if (strcmp(argv[i], "--blue") == 0 || strcmp(argv[i], "-b") == 0)
     {
       i++;
       args->b = atoi(argv[i]);
     }
-    else if (strcmp(argv[1], "--keep") == 0 || strcmp(argv[i], "-k") == 0)
+    else if (strcmp(argv[i], "--keep") == 0 || strcmp(argv[i], "-k") == 0)
     {
       i++;
       args->keeptime = atoi(argv[i]);
     }
-    else if (strcmp(argv[1], "--depth") == 0 || strcmp(argv[i], "-d") == 0)
+    else if (strcmp(argv[i], "--depth") == 0 || strcmp(argv[i], "-d") == 0)
     {
       i++;
       args->depth = atoi(argv[i]);
