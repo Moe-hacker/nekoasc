@@ -159,7 +159,7 @@ format :
 	$(FORMATER) $(SRC) $(HEADER)
 clean :
 	$(CLEAN_LOG) $(O)
-	@rm -f nekoasc||true
+	@rm -f $(BIN_TARGET)||true
 	@rm -rf $(O)||true
 help :
 	@printf "\033[1;38;2;254;228;208mUsage:\n"
