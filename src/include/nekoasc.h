@@ -46,9 +46,9 @@ enum
 {
   BUF_SIZE = (1024 * 1024)
 };
-bool is_pipe();
+bool is_pipe(void);
 void error(char *msg);
 void typewriter(char *buf, unsigned int interval);
 void get_input(char *buf, int len);
-void show_version_info();
+void show_version_info(void);
 void blink(char *buf, int keep_time, int r, int g, int b, int depth, unsigned int interval);

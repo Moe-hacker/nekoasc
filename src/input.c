@@ -27,8 +27,8 @@
  *
  *
  */
-#include "nekoasc.h"
-bool is_pipe()
+#include "include/nekoasc.h"
+bool is_pipe(void)
 {
   /*
    * Simply check the file type of /proc/self/fd/0

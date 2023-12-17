@@ -27,7 +27,7 @@
  *
  *
  */
-#include "nekoasc.h"
+#include "include/nekoasc.h"
 struct ARGS
 {
   unsigned int interval;

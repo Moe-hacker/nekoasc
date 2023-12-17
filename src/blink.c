@@ -27,7 +27,7 @@
  *
  *
  */
-#include "nekoasc.h"
+#include "include/nekoasc.h"
 void blink(char *buf, int keep_time, int r, int g, int b, int depth, unsigned int interval)
 {
   printf("\033[?25l");

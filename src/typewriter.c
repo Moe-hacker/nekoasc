@@ -27,7 +27,7 @@
  *
  *
  */
-#include "nekoasc.h"
+#include "include/nekoasc.h"
 void typewriter(char *buf, unsigned int interval)
 {
   /*
